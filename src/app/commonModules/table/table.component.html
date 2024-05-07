@@ -1,0 +1,62 @@
+<p-table [columns]="selectedColumns" [value]="tableData" [resizableColumns]="true" styleClass="p-datatable-striped"
+    [paginator]="true" [rows]="10" [showCurrentPageReport]="true" [tableStyle]="{ 'min-width': '50rem' }"
+    currentPageReportTemplate="{{'COMMON.SHOWING' | translate }} {first} to {last} of {totalRecords} {{footerKey | translate}}" [stateKey]="'table_'+key"
+    [reorderableColumns]="true" [rowsPerPageOptions]="[5, 10, 20]" [scrollable]="true" scrollHeight="450px"
+    [loading]="loading" (onRowSelect)="showDetails($event)" (onEditComplete)="onEditComplete($event)" dataKey="id">
+    <ng-template pTemplate="caption" *ngIf="showColumnSelection">
+        <p-multiSelect [options]="columns" [(ngModel)]="selectedColumns" optionLabel="header"
+            placeholder="Please select columns" [style]="{'min-width': '250px'}" > 
+            <ng-template let-value pTemplate="selectedItems">
+                <div *ngIf="!value || value.length === 0; else otherTemplate">Please select columns</div>
+                <ng-template #otherTemplate>
+                    <div>{{selectedColumns.length}} {{'COMMON.COLUMNS' | translate}} {{'COMMON.SELECTED' | translate}}</div>
+                </ng-template>
+            </ng-template>
+            <ng-template let-item pTemplate="item">
+                <div class="flex align-items-center gap-2">
+                    <div>{{ item.header | translate }}</div>
+                </div>
+            </ng-template>
+        </p-multiSelect>
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+            <ng-container *ngFor="let col of columns">
+                <ng-container *ngIf="col.field === 'name'; else otherTemplate">
+                    <th pFrozenColumn pResizableColumn pReorderableColumn pSortableColumn="{{col.field}}">{{ col.header | translate }}
+                        <p-sortIcon field="{{col.field}}"></p-sortIcon>
+                    </th>
+                </ng-container>
+                <ng-template #otherTemplate>
+                    <th pResizableColumn pReorderableColumn pSortableColumn="{{col.field}}">{{ col.header | translate }}
+                        <p-sortIcon field="{{col.field}}"></p-sortIcon>
+                    </th>
+                </ng-template>
+            </ng-container>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-columns="columns" let-rowData let-rowIndex="rowIndex">
+        <tr>
+            <ng-container *ngFor="let col of columns">
+                <ng-container *ngIf="col.field !='action' && col.field != 'status'">
+                        <ng-container *ngIf="col.field === 'name'; else otherTemplate">
+                            <td pFrozenColumn>{{ rowData[col.field] | translate }}</td>
+                        </ng-container>
+                        <ng-template #otherTemplate>
+                            <td>{{ rowData[col.field] | translate }}</td>
+                        </ng-template>
+                </ng-container>
+                <td *ngIf="col.field =='status'">
+                    <span class="customer-badge {{ (rowData.statusBadge) ? rowData.statusBadge : rowData[col.field] }}">{{ rowData[col.field] }}</span>
+                </td>
+                <td *ngIf="col.field =='action'">
+                    <span class="actionLink" (click)="edit(rowData, rowIndex)">
+                        <i class="pi pi-pencil text-xl text-blue-500"></i>
+                    </span>
+                </td>
+            </ng-container>
+        </tr>
+    </ng-template>
+</p-table>
+
+

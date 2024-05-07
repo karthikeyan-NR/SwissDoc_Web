@@ -1,0 +1,11 @@
+{
+    "COMMON": {
+        
+    },
+    "MENU": {
+        "DASHBOARD": "Dashboard",
+        "USER_PROFILES": "User Profiles",
+        "CHILDMENU_1": "Child Menu 1",
+        "CHILDMENU_2": "Child Menu 2"
+    }
+}
