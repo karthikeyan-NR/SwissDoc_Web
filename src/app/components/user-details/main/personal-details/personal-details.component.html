@@ -1,0 +1,21 @@
+<form [formGroup]="personalDetailsForm" (ngSubmit)="submitForm()">
+    <div class="p-field">
+        <label for="name">Full Name</label>
+        <div class="input-container">
+            <input id="name" pInputText formControlName="name" placeholder="Full Name" />
+        </div>
+    </div>
+    <div class="p-field">
+        <label for="age">Age</label>
+        <div class="input-container">
+            <input pInputText pKeyFilter="int" id="age" formControlName="age" placeholder="Age" />
+        </div>
+    </div>
+    <div class="p-field">
+        <label for="sex">Sex</label>
+        <div class="input-container">
+            <p-selectButton [options]="genderOptions" formControlName="sex" optionLabel="label" optionValue="value"></p-selectButton>
+        </div>
+    </div>
+    <button type="submit" pButton label="Submit"></button>
+</form>

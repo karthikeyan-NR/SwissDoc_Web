@@ -1,0 +1,44 @@
+<form [formGroup]="lifestyleFormGroup" (ngSubmit)="onSave()" class="form-container">
+    <!-- Smoking -->
+    <div class="form-row" formGroupName="smoke">
+        <div class="form-col">
+            <p>Do you smoke? <span class="pi pi-info-circle"style="font-size: 0.75rem;color:blue" [pTooltip]="questionInfo.smoke"></span></p>
+            <p-selectButton [options]="selectButtonOptions" formControlName="smoke" optionLabel="label"
+                optionValue="value"></p-selectButton>
+        </div>
+        <div class="form-col" *ngIf="lifestyleFormGroup.get('smoke.smoke')?.value">
+            <p>Select frequency</p>
+            <p-dropdown formControlName="smokeFrequency" [options]="smokeOptions" placeholder="frequency"></p-dropdown>
+        </div>
+    </div>
+
+    <!-- Exercise -->
+    <div class="form-row" formGroupName="exercise">
+        <div class="form-col">
+            <p>Do you exercise regularly? <span class="pi pi-info-circle"style="font-size: 0.75rem;color:blue" [pTooltip]="questionInfo.exercise"></span></p>
+            <p-selectButton [options]="selectButtonOptions" formControlName="exercise" optionLabel="label"
+                optionValue="value"></p-selectButton>
+        </div>
+        <div class="form-col" *ngIf="lifestyleFormGroup.get('exercise.exercise')?.value">
+            <p>Select frequency</p>
+            <p-dropdown formControlName="exerciseFrequency" [options]="exerciseOptions"
+                placeholder="frequency"></p-dropdown>
+        </div>
+    </div>
+
+    <!-- Eating Habits -->
+    <div class="form-row" formGroupName="eatHealthy">
+        <div class="form-col">
+            <p>Do you eat healthy? <span class="pi pi-info-circle" style="font-size: 0.75rem;color:blue" [pTooltip]="questionInfo.eatHealthy"></span></p>
+            <p-selectButton [options]="selectButtonOptions" formControlName="eatHealthy" optionLabel="label"
+                optionValue="value"></p-selectButton>
+        </div>
+        <div class="form-col" *ngIf="lifestyleFormGroup.get('eatHealthy.eatHealthy')?.value">
+            <p>Select frequency</p>
+            <p-dropdown formControlName="eatHealthyFrequency" [options]="eatHealthyOptions"
+                placeholder="frequency"></p-dropdown>
+        </div>
+    </div>
+
+    <p-button label="Save" type="ngSubmit"></p-button>
+</form>

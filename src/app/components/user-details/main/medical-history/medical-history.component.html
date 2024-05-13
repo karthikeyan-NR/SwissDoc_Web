@@ -1,0 +1,24 @@
+<div [formGroup]="medicalHistoryFormGroup">
+    <p>Check the conditions that apply to you or any member of your immediate relatives?</p>
+    <div formArrayName="conditions" class="form-container">
+        <div *ngFor="let conditionGroup of conditionsArray.controls; let i = index" class="form-row">
+            <div [formGroupName]="i" class="form-column">
+                <p-toggleButton formControlName="condition"styleClass="p-button-sm" [pTooltip]="medicalConditions[i].info"
+                    tooltipPosition="right" (onChange)="toggleCondition($event, i)"
+                    [onLabel]="medicalConditions[i].label" [offLabel]="medicalConditions[i].label"></p-toggleButton>
+            </div>
+            <div [formGroupName]="i" class="form-column">
+                <div *ngIf="conditionGroup.get('condition')?.value">
+                    <p-dropdown [options]="personAffected" formControlName="personAffected" optionLabel="label"
+                        placeholder="Person Affected"></p-dropdown>
+                </div>
+            </div>
+            <div [formGroupName]="i" class="form-column">
+                <div *ngIf="conditionGroup.get('personAffected')?.value">
+                    <input pInputText type="text" formControlName="remarks" placeholder="Remarks">
+                </div>
+            </div>
+        </div>
+    </div>
+    <button class="p-button" (click)="submitForm()">Submit</button>
+</div>

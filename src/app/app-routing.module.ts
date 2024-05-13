@@ -13,7 +13,8 @@ const routes: Routes = [
         path: '', component: AppLayoutComponent,
         children: [
             { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-            { path: 'dashboard', data: { breadcrumb: 'Dashboard' }, loadChildren: () => import('./components/dashboards/dashboards.module').then(m => m.DashboardsModule) }
+            { path: 'dashboard', data: { breadcrumb: 'Dashboard' }, loadChildren: () => import('./components/dashboards/dashboards.module').then(m => m.DashboardsModule) },
+            { path: 'user-details', loadChildren: () => import('./components/user-details/user-details.module').then(m => m.UserDetailsModule) }
         ]
     },
     //{ path: 'auth', data: { breadcrumb: 'Auth' }, loadChildren: () => import('./components/auth/auth.module').then(m => m.AuthModule) },

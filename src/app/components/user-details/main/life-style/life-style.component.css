@@ -1,0 +1,18 @@
+.form-container {
+    display: grid;
+    gap: 10px;
+}
+
+.form-fieldset {
+    padding: 5px;
+}
+
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.form-col {
+    flex: 1;
+    margin-right: 10px;
+}

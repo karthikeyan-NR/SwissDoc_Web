@@ -1,0 +1,13 @@
+.avatar-center-container {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+}
+
+.avatar-container {
+  display: flex;
+}
+
+.avatar-wrapper {
+  width: 100px; /* Fixed width for each avatar wrapper */
+  margin-right: 50px; /* Adjust margin between avatars */
+}
