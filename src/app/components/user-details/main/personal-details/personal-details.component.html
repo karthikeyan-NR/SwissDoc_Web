@@ -1,20 +1,21 @@
 <form [formGroup]="personalDetailsForm" (ngSubmit)="submitForm()">
-    <div class="p-field">
-        <label for="name">Full Name</label>
-        <div class="input-container">
-            <input id="name" pInputText formControlName="name" placeholder="Full Name" />
+    <div class="formgrid grid">
+        <div class="field col-12">
+            <label for="name">Full Name</label>
+            <input id="name" pInputText formControlName="name"
+                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+                placeholder="Full Name" />
         </div>
-    </div>
-    <div class="p-field">
-        <label for="age">Age</label>
-        <div class="input-container">
-            <input pInputText pKeyFilter="int" id="age" formControlName="age" placeholder="Age" />
+        <div class="field col-12 md:col-6 lg:col-6">
+            <label for="age">Age</label>
+            <input pInputText pKeyFilter="int" id="age"
+                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+                formControlName="age" placeholder="Age" />
         </div>
-    </div>
-    <div class="p-field">
-        <label for="sex">Sex</label>
-        <div class="input-container">
-            <p-selectButton [options]="genderOptions" formControlName="sex" optionLabel="label" optionValue="value"></p-selectButton>
+        <div class="field col-12 md:col-6 lg:col-6">
+            <label for="sex">Sex</label>
+            <p-selectButton [options]="genderOptions" formControlName="sex" optionLabel="label"
+                optionValue="value"></p-selectButton>
         </div>
     </div>
     <button type="submit" pButton label="Submit"></button>

@@ -1,4 +1,4 @@
-import { TooltipOptions } from 'primeng/api/tooltipoptions';
+import { TooltipOptions } from 'primeng/api';
 
 export const tooltipOptions: TooltipOptions = {
     showDelay: 150,

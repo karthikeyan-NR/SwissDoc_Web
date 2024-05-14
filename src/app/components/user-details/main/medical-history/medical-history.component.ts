@@ -1,69 +1,63 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, FormArray } from '@angular/forms';
+import { Component } from '@angular/core';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { FormModalComponent } from '../common/form-modal/form-modal.component';
+
+interface MedicalCondition {
+  label: string;
+  value: boolean;
+  info: string;
+  data?: {
+    personAffected?: string;
+    remarks?: string
+  }
+}
 
 @Component({
   selector: 'app-medical-history',
   templateUrl: './medical-history.component.html',
   styleUrls: ['./medical-history.component.css']
 })
-export class MedicalHistoryComponent implements OnInit {
-  medicalHistoryFormGroup!: FormGroup;
+export class MedicalHistoryComponent {
 
-  medicalConditions = [
-    { label: 'Hypertension', value: 'hypertension', info: 'You are typically considered to have hypertension if your blood pressure readings consistently measure at or above 130/80 mmHg.' },
-    { label: 'Diabetes', value: 'diabetes', info: 'Diabetes is typically diagnosed if your blood sugar levels consistently measure above 126 mg/dL in fasting plasma glucose tests.' },
-    { label: 'Stroke', value: 'stroke', info: 'A sudden onset of symptoms such as facial drooping, arm weakness, or speech difficulty may indicate a stroke, necessitating immediate medical attention.' },
-    { label: 'Heart Failure', value: 'heartFailure', info: 'Shortness of breath, fatigue, and swelling in the legs can signal heart failure, requiring prompt evaluation by a healthcare professional.' },
-    { label: 'Heart Attack', value: 'heartAttack', info: 'Chest pain or discomfort, often radiating to the arms, neck, jaw, or back, can signify a heart attack, warranting urgent medical attention.' },
-    { label: 'Atrial Fibrillation', value: 'atrialFibrillation', info: 'A history of irregular heart rhythm, palpitations, or episodes of dizziness may indicate known atrial fibrillation, necessitating ongoing medical management and monitoring.' },
-    { label: 'High Cholesterol', value: 'highCholesterol', info: 'High cholesterol is typically diagnosed if blood tests consistently show total cholesterol levels exceeding 200 milligrams per deciliter (mg/dL), necessitating lifestyle changes or medical treatment.' }
+  medicalConditions: MedicalCondition[] = [
+    { label: 'Hypertension', value: false, info: 'You are typically considered to have hypertension if your blood pressure readings consistently measure at or above 130/80 mmHg.', data: {} },
+    { label: 'Diabetes', value: false, info: 'Diabetes is typically diagnosed if your blood sugar levels consistently measure above 126 mg/dL in fasting plasma glucose tests.', data: {} },
+    { label: 'Stroke', value: false, info: 'A sudden onset of symptoms such as facial drooping, arm weakness, or speech difficulty may indicate a stroke, necessitating immediate medical attention.', data: {} },
+    { label: 'Heart Failure', value: false, info: 'Shortness of breath, fatigue, and swelling in the legs can signal heart failure, requiring prompt evaluation by a healthcare professional.', data: {} },
+    { label: 'Heart Attack', value: false, info: 'Chest pain or discomfort, often radiating to the arms, neck, jaw, or back, can signify a heart attack, warranting urgent medical attention.', data: {} },
+    { label: 'Atrial Fibrillation', value: false, info: 'A history of irregular heart rhythm, palpitations, or episodes of dizziness may indicate known atrial fibrillation, necessitating ongoing medical management and monitoring.', data: {} },
+    { label: 'High Cholesterol', value: false, info: 'High cholesterol is typically diagnosed if blood tests consistently show total cholesterol levels exceeding 200 milligrams per deciliter (mg/dL), necessitating lifestyle changes or medical treatment.', data: {} }
   ];
 
-  personAffected = [
-    { label: 'Self', value: 'Self' },
-    { label: 'Father', value: 'Father' },
-    { label: 'Mother', value: 'Mother' },
-    { label: 'Siblings', value: 'Siblings' },
-    { label: 'Grandparents', value: 'Grandparents' }
-  ];
+  constructor(private dialogService: DialogService, private dialogRef: DynamicDialogRef) { }
 
-  constructor(private fb: FormBuilder) { }
-
-  ngOnInit() {
-    this.medicalHistoryFormGroup = this.fb.group({
-      conditions: this.fb.array([])
-    });
-    this.initFormControls();
-  }
-
-  initFormControls() {
-    this.medicalConditions.forEach(condition => {
-      const conditionGroup = this.fb.group({
-        name: [condition.value],
-        condition: [false],
-        personAffected: [''],
-        remarks: ['']
+  toggleCondition(index: number) {
+    const currentCondition = this.medicalConditions[index];
+    this.medicalConditions[index].value = !currentCondition.value;
+    if (currentCondition.value) {
+      const ref = this.dialogService.open(FormModalComponent, {
+        header: currentCondition.label,
+        width: '45%',
+        data: {
+          data: currentCondition.data,
+          parent: 'medicalHistory'
+        },
+        transitionOptions: '1000ms cubic-bezier(0.25, 0.8, 0.25, 1)'
       });
-      this.conditionsArray.push(conditionGroup);
-    });
-  }
 
-  get conditionsArray() {
-    return this.medicalHistoryFormGroup.get('conditions') as FormArray;
-  }
-
-  toggleCondition(event:any, index: number) {
-    const checked=false;
-    console.log(event);
-    
-    if (!checked) {
-      this.conditionsArray.at(index).get('personAffected')?.setValue('');
-      this.conditionsArray.at(index).get('remarks')?.setValue('');
+      ref.onClose.subscribe((data) => {
+        if (data) {
+          this.medicalConditions[index].data = data;
+        }
+      });
+    } else {
+      this.medicalConditions[index].data = {};
     }
   }
 
   submitForm() {
-    const formData = this.medicalHistoryFormGroup.value;
-    console.log(formData);
+    console.log(this.medicalConditions);
+    this.dialogRef.close();
   }
+
 }

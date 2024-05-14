@@ -8,8 +8,9 @@ import { PersonalDetailsComponent } from './main/personal-details/personal-detai
 import { MedicalHistoryComponent } from './main/medical-history/medical-history.component';
 import { LifeStyleComponent } from './main/life-style/life-style.component';
 import { MedicationsComponent } from './main/medications/medications.component';
+import { FormModalComponent } from './main/common/form-modal/form-modal.component';
 
-import { DynamicDialogModule } from 'primeng/dynamicdialog';
+import { DialogService, DynamicDialogConfig, DynamicDialogModule, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { AvatarModule } from 'primeng/avatar';
@@ -21,9 +22,16 @@ import { SelectButtonModule } from 'primeng/selectbutton';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ListboxModule } from 'primeng/listbox';
 import { ToggleButtonModule } from 'primeng/togglebutton';
-import { AnimateModule } from 'primeng/animate';
+import { TableModule } from 'primeng/table';
 import { StepsModule } from 'primeng/steps';
-import { UserDetailsRoutingModule } from './user-details.routing.module';
+
+
+const routes: Routes = [
+  {
+    path: '',
+    component: MainComponent
+  }
+];
 
 @NgModule({
   declarations: [
@@ -31,7 +39,8 @@ import { UserDetailsRoutingModule } from './user-details.routing.module';
     PersonalDetailsComponent,
     MedicalHistoryComponent,
     LifeStyleComponent,
-    MedicationsComponent
+    MedicationsComponent,
+    FormModalComponent
   ],
   imports: [
     CommonModule,
@@ -48,10 +57,16 @@ import { UserDetailsRoutingModule } from './user-details.routing.module';
     CheckboxModule,
     ListboxModule,
     ToggleButtonModule,
-    AnimateModule,
+    TableModule,
     StepsModule,
     ReactiveFormsModule,
-    UserDetailsRoutingModule
-  ]
+    RouterModule.forChild(routes)
+  ],
+  providers: [
+    DialogService,
+    DynamicDialogConfig,
+    DynamicDialogRef
+  ],
+  exports: [RouterModule]
 })
 export class UserDetailsModule { }

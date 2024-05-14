@@ -1,9 +1,10 @@
 <div class="grid">
     <ng-container *ngFor="let config of buttonConfigs">
-        <div class="col-2">
+        <div class="col-12 md:col-6 lg:col-3">
             <p-button styleClass="p-button-text" [pTooltip]="config.label" [tooltipOptions]="tooltipOptions"
                 (click)="show(config.formName)">
-                <img [src]="config.imgUrl" width="100rem">
+                <img [src]="config.imgUrl" class="fluid" width="100rem">
+
             </p-button>
         </div>
     </ng-container>

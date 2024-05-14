@@ -1,24 +1,11 @@
-<div [formGroup]="medicalHistoryFormGroup">
-    <p>Check the conditions that apply to you or any member of your immediate relatives?</p>
-    <div formArrayName="conditions" class="form-container">
-        <div *ngFor="let conditionGroup of conditionsArray.controls; let i = index" class="form-row">
-            <div [formGroupName]="i" class="form-column">
-                <p-toggleButton formControlName="condition"styleClass="p-button-sm" [pTooltip]="medicalConditions[i].info"
-                    tooltipPosition="right" (onChange)="toggleCondition($event, i)"
-                    [onLabel]="medicalConditions[i].label" [offLabel]="medicalConditions[i].label"></p-toggleButton>
-            </div>
-            <div [formGroupName]="i" class="form-column">
-                <div *ngIf="conditionGroup.get('condition')?.value">
-                    <p-dropdown [options]="personAffected" formControlName="personAffected" optionLabel="label"
-                        placeholder="Person Affected"></p-dropdown>
-                </div>
-            </div>
-            <div [formGroupName]="i" class="form-column">
-                <div *ngIf="conditionGroup.get('personAffected')?.value">
-                    <input pInputText type="text" formControlName="remarks" placeholder="Remarks">
-                </div>
-            </div>
-        </div>
-    </div>
-    <button class="p-button" (click)="submitForm()">Submit</button>
+<p>Check the conditions that apply to you or any member of your immediate relatives?</p>
+<div>
+    <ng-container *ngFor="let condition of medicalConditions; let i = index">
+        <button pButton type="button" class="p-button-sm mr-3 mb-2"
+            [ngClass]="{'p-button-info': condition.value,'p-button-outlined':!condition.value}"
+            [pTooltip]="condition.info" (click)="toggleCondition(i)">
+            {{ condition.label }}
+        </button>
+    </ng-container>
 </div>
+<button class="p-button" (click)="submitForm()">Submit</button>
