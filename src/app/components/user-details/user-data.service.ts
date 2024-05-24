@@ -45,22 +45,35 @@ export class UserDataService {
     }
   ]
 
-  // BehaviorSubjects to hold user data
-  private personalDetailSubject = new BehaviorSubject<PersonalDetail | null>(null);
-  private medicalHistorySubject = new BehaviorSubject<MedicalCondition[]>(this.medicalConditions);
-  private lifeStyleSubject = new BehaviorSubject<LifeStyle[]>(this.lifeStyleData);
-  private medicationsSubject = new BehaviorSubject<Medication[]>(this.medications);
+  profile: PersonalDetail = { name: '', age: 0, sex: '' }
 
-  // Observable streams for components to subscribe to
+  loading: boolean = false;
+
+  // BehaviorSubjects to hold user data
+  private personalDetailSubject = new BehaviorSubject<PersonalDetail>(this.getFromLocalStorage('personalDetail', this.profile));
+  private medicalHistorySubject = new BehaviorSubject<MedicalCondition[]>(this.getFromLocalStorage('medicalHistory', this.medicalConditions));
+  private lifeStyleSubject = new BehaviorSubject<LifeStyle[]>(this.getFromLocalStorage('lifeStyle', this.lifeStyleData));
+  private medicationsSubject = new BehaviorSubject<Medication[]>(this.getFromLocalStorage('medications', this.medications));
+  private loadingSubject = new BehaviorSubject<boolean>(this.getFromLocalStorage('loading', this.loading));
+
   personalDetail$ = this.personalDetailSubject.asObservable();
   medicalHistory$ = this.medicalHistorySubject.asObservable();
   lifeStyle$ = this.lifeStyleSubject.asObservable();
   medications$ = this.medicationsSubject.asObservable();
+  loading$ = this.loadingSubject.asObservable();
 
   constructor() { }
 
-  // Methods to get the current values
-  getPersonalDetail(): PersonalDetail | null {
+  private getFromLocalStorage<T>(key: string, defaultValue: T): T {
+    const storedValue = localStorage.getItem(key);
+    return storedValue ? JSON.parse(storedValue) : defaultValue;
+  }
+
+  private setToLocalStorage<T>(key: string, value: T): void {
+    localStorage.setItem(key, JSON.stringify(value));
+  }
+
+  getPersonalDetail(): PersonalDetail {
     return this.personalDetailSubject.getValue();
   }
 
@@ -76,37 +89,52 @@ export class UserDataService {
     return this.medicationsSubject.getValue();
   }
 
-  // Methods to update the values
+  getLoading(): boolean {
+    return this.loadingSubject.getValue();
+  }
+
   updatePersonalDetail(detail: PersonalDetail): void {
     this.personalDetailSubject.next(detail);
+    this.setToLocalStorage('personalDetail', detail);
   }
 
   updateMedicalHistory(history: MedicalCondition[]): void {
     this.medicalHistorySubject.next(history);
+    this.setToLocalStorage('medicalHistory', history);
   }
 
   updateLifeStyle(lifestyle: LifeStyle[]): void {
     this.lifeStyleSubject.next(lifestyle);
+    this.setToLocalStorage('lifeStyle', lifestyle);
   }
 
   updateMedications(medications: Medication[]): void {
     this.medicationsSubject.next(medications);
+    this.setToLocalStorage('medications', medications);
   }
 
-  // Methods to clear the values
+  updateLoading(loading: boolean): void {
+    this.loadingSubject.next(loading);
+    this.setToLocalStorage('loading', loading);
+  }
+
   clearPersonalDetail(): void {
-    this.personalDetailSubject.next(null);
+    this.personalDetailSubject.next(this.profile);
+    this.setToLocalStorage('personalDetail', this.profile);
   }
 
   clearMedicalHistory(): void {
     this.medicalHistorySubject.next(this.medicalConditions);
+    this.setToLocalStorage('medicalHistory', this.medicalConditions);
   }
 
   clearLifeStyle(): void {
     this.lifeStyleSubject.next(this.lifeStyleData);
+    this.setToLocalStorage('lifeStyle', this.lifeStyleData);
   }
 
   clearMedications(): void {
     this.medicationsSubject.next(this.medications);
+    this.setToLocalStorage('medications', this.medications);
   }
 }

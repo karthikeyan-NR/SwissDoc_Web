@@ -1,0 +1,22 @@
+<p-accordion [multiple]="true">
+    <p-accordionTab header="Pre-existing Condition">
+        <div *ngIf="medicalHistory;else none">
+            <ng-container *ngFor="let condition of medicalHistory">
+                <p>{{condition.name}}</p>
+            </ng-container>
+        </div>
+    </p-accordionTab>
+    <p-accordionTab header="Medication Undertaken">
+        <div *ngIf="medications;else none">
+            <p *ngFor="let condition of medications">{{condition.name}}</p>
+        </div>
+    </p-accordionTab>
+    <p-accordionTab header="Lifestyle Followed">
+        <div *ngIf="lifeStyle;else none">
+            <p *ngFor="let item of lifeStyle">{{item.type}}</p>
+        </div>
+    </p-accordionTab>
+</p-accordion>
+<ng-template #none>
+    <p>None</p>
+</ng-template>

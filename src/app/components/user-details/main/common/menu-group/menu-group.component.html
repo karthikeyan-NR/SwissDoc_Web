@@ -1,5 +1,11 @@
-<div class="grid flex align-items-center justify-content-center">
+<div class="grid flex align-items-center justify-content-evenly">
     <ng-container *ngFor="let config of menuConfigs">
-        <app-menu [menuConfig]="config"></app-menu>
+        <p-card class="col md:col-6 lg:col-2 flex align-items-center cursor-pointer"
+            (click)="openDialog(config.formName)">
+            <ng-template pTemplate="content">
+                <img [src]="config.imgUrl" class="fluid" width="120rem">
+                <p class="text-center">{{ config.label }}</p>
+            </ng-template>
+        </p-card> 
     </ng-container>
 </div>

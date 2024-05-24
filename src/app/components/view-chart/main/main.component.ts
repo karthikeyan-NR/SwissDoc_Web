@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
 import { HeartRate } from '../heart-rate.model';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-main',
@@ -11,11 +12,14 @@ export class MainComponent implements OnInit {
   chartData!: any;
   chartOptions!: any;
   showChart = false;
+  timeId: string = "1";
 
-  constructor(private dataService: DataService) { }
+  constructor(private dataService: DataService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.dataService.fetchHeartRateData().subscribe({
+    const id = this.route.snapshot.params['id'];
+    this.timeId = id ? id : this.timeId;
+    this.dataService.fetchHeartRateData(this.timeId).subscribe({
       next: (data: HeartRate[]) => {
         this.dataService.setHeartRate(data);
         this.showChart = true;

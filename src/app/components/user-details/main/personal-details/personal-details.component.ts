@@ -35,6 +35,8 @@ export class PersonalDetailsComponent implements OnInit {
 
 
   submitForm() {
+    console.log(this.personalDetailsForm.value);
+
     this.userDataService.updatePersonalDetail(this.personalDetailsForm.value);
     this.dialogRef.close();
   }

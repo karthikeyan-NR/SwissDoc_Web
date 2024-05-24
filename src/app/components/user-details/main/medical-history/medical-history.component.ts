@@ -14,6 +14,7 @@ export class MedicalHistoryComponent implements OnInit {
 
   medicalConditions!: MedicalCondition[];
   subHeading!: string;
+  click: number = 0;
 
   constructor(
     private dialogService: DialogService,
@@ -30,14 +31,20 @@ export class MedicalHistoryComponent implements OnInit {
 
   // Toggle the condition's value and open a dialog if the condition is now true
   toggleCondition(index: number): void {
-    const condition = this.medicalConditions[index];
-    condition.value = !condition.value;
-
-    if (condition.value) {
-      this.openConditionDialog(condition, index);
-    } else {
+    const medication = this.medicalConditions[index];
+    if (this.click === 2) {
+      medication.value = !medication.value;
       this.clearConditionData(index);
+      this.click = 0;
     }
+    else if (this.click == 0) {
+      medication.value = !medication.value;
+      this.openConditionDialog(medication, index);
+    }
+    else {
+      this.openConditionDialog(medication, index);
+    }
+    this.click++;
   }
 
   // Open a dialog for the specified condition

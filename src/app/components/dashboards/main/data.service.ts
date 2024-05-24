@@ -2,14 +2,18 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { HeartRate } from './heart-rate.model';
+import { Inference, HeartRate } from '../common/models/models';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
+
   private heartRateSubject = new BehaviorSubject<HeartRate[]>([]);
   heartRate$ = this.heartRateSubject.asObservable();
+
+  private heartRateInferenceSubject = new BehaviorSubject<Inference[]>([]);
+  heartRateInference$ = this.heartRateInferenceSubject.asObservable();
 
   constructor(private http: HttpClient) { }
 
@@ -21,6 +25,10 @@ export class DataService {
 
   setHeartRate(data: HeartRate[]): void {
     this.heartRateSubject.next(data);
+  }
+
+  fetchHeartRateInference(): Observable<Inference[]> {
+    return this.http.get<any>(`https://onehermes.net/api/inference`)
   }
 
   prepareChartData(chartType: string): { chartData: any, chartOptions: any } {

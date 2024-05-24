@@ -22,9 +22,10 @@ import { ListboxModule } from 'primeng/listbox';
 import { CardModule } from 'primeng/card';
 import { TabViewModule } from 'primeng/tabview';
 import { ToggleButtonModule } from 'primeng/togglebutton';
+import { PanelModule } from 'primeng/panel';
+import { AvatarModule } from 'primeng/avatar';
+import { MenuModule } from 'primeng/menu';
 
-
-import { MenuComponent } from './main/common/menu/menu.component';
 import { MainComponent } from './main/main.component';
 import { CustomDialogService } from './main/helper/custom-dialog.service';
 import { CustomToggleButtonComponent } from './main/common/custom-toggle-button/custom-toggle-button.component';
@@ -33,6 +34,7 @@ import { DropdownComponent } from './main/common/dropdown/dropdown.component';
 import { MenuGroupComponent } from './main/common/menu-group/menu-group.component';
 import { DataViewComponent } from './main/common/data-view/data-view.component';
 import { AllTableModule } from 'src/app/commonModules/table/table.Module';
+import { ProfilePanelModule } from 'src/app/commonModules/profile-panel/profile-panel.module';
 
 
 const routes: Routes = [
@@ -46,7 +48,6 @@ const routes: Routes = [
   declarations: [
     MainComponent,
     MenuGroupComponent,
-    MenuComponent,
     PersonalDetailsComponent,
     MedicalHistoryComponent,
     LifeStyleComponent,
@@ -59,6 +60,7 @@ const routes: Routes = [
   ],
   imports: [
     CommonModule,
+    ProfilePanelModule,
     DynamicDialogModule,
     DialogModule,
     ButtonModule,
@@ -74,6 +76,9 @@ const routes: Routes = [
     TabViewModule,
     AllTableModule,
     ToggleButtonModule,
+    PanelModule,
+    AvatarModule,
+    MenuModule,
     ReactiveFormsModule,
     RouterModule.forChild(routes)
   ],

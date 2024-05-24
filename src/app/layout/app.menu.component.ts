@@ -1,5 +1,6 @@
 import { OnInit } from '@angular/core';
 import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 
 @Component({
@@ -19,12 +20,9 @@ export class AppMenuComponent implements OnInit {
             },
             { separator: true },
             {
-                label: 'MENU.USER_PROFILES',  // USER PROFILES
+                label: 'User Profile',
                 icon: 'pi pi-fw pi-users',
-                items: [
-                    { label: 'MENU.CHILDMENU_1', routerLink: [] },
-                    { label: 'MENU.CHILDMENU_2', routerLink: [] }
-                ]
+                routerLink: ['/profile']
             }
         ];
     }

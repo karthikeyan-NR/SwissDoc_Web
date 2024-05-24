@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { UserDataService } from '../user-data.service';
 import { menuConfigs } from './helper/user-details.config';
+import { UserDataService } from '../user-data.service';
 
 @Component({
   selector: 'app-main',
@@ -14,8 +14,7 @@ export class MainComponent implements OnInit {
     data: any
   }[];
   stateOptions: any[] = [{ label: 'Enter Details', value: 'on' }, { label: 'View Details', value: 'off' }];
-
-  value: string = 'on';
+  loading: boolean = false;
 
   constructor(private userDataService: UserDataService) {
     this.userDetails = [];
@@ -32,5 +31,10 @@ export class MainComponent implements OnInit {
       { heading: 'LifeStyle', data: this.userDataService.getLifeStyle() },
       { heading: 'Medications', data: this.userDataService.getMedications() }
     ];
+  }
+
+  isLoading(loading: boolean) {
+    this.loading = loading;
+    this.getUserDetails();
   }
 }

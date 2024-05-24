@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 
-import { ChartRoutingModule } from './view-chart-routing.module';
+import { ViewChartRoutingModule } from './view-chart-routing.module';
 
 import { MainComponent } from './main/main.component';
 import { PoincareComponent } from './main/poincare/poincare.component';
@@ -22,7 +22,7 @@ import { CustomChartModule } from 'src/app/commonModules/custom-chart/custom-cha
     CommonModule,
     HttpClientModule,
     CustomChartModule,
-    ChartRoutingModule
+    ViewChartRoutingModule
   ]
 })
 export class ViewChartModule { }

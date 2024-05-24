@@ -21,6 +21,7 @@ export class MedicationsComponent implements OnInit {
 
   medications !: Medication[];
   subHeading!: string;
+  click = 0;
 
   constructor(
     private dialogService: DialogService,
@@ -38,13 +39,19 @@ export class MedicationsComponent implements OnInit {
   // Toggle the medication status and open dialog if selected
   toggleCondition(index: number): void {
     const medication = this.medications[index];
-    medication.value = !medication.value;
-
-    if (medication.value) {
-      this.openMedicationDialog(medication, index);
-    } else {
+    if (this.click === 2) {
+      medication.value = !medication.value;
       this.clearMedicationData(index);
+      this.click = 0;
     }
+    else if (this.click == 0) {
+      medication.value = !medication.value;
+      this.openMedicationDialog(medication, index);
+    }
+    else {
+      this.openMedicationDialog(medication, index);
+    }
+    this.click++;
   }
 
   // Open a dialog for the specified medication

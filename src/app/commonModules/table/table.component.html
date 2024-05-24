@@ -1,6 +1,6 @@
 <p-table [columns]="selectedColumns" [value]="tableData" [resizableColumns]="true" styleClass="p-datatable-striped"
-    [paginator]="true" [rows]="10" [showCurrentPageReport]="true" [tableStyle]="{ 'min-width': '50rem' }"
-    [stateKey]="'table_'+key" [scrollable]="true" scrollHeight="450px" [loading]="loading" dataKey="id">
+    [showCurrentPageReport]="true" [stateKey]="'table_'+key" [scrollable]="true"
+    scrollHeight="450px" [loading]="loading" dataKey="id">
     <ng-template pTemplate="header" let-columns>
         <tr>
             <ng-container *ngFor="let col of columns">
@@ -26,7 +26,8 @@
                         <td pFrozenColumn>{{ rowData[col.field] | translate }}</td>
                     </ng-container>
                     <ng-template #otherTemplate>
-                        <td>{{ rowData[col.field] | translate }}</td>
+                        <td>{{ rowData[col.field]===true?'Yes':rowData[col.field]===false?'No':rowData[col.field] |
+                            translate }}</td>
                     </ng-template>
                 </ng-container>
                 <td *ngIf="col.field =='status'">

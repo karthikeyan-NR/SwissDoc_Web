@@ -1,0 +1,8 @@
+<div class="grid">
+    <app-profile-panel class="col-4" [profile]="personalDetail"></app-profile-panel>
+    <app-accordion class="col-4 mt-2" [medications]="medications" [medicalHistory]="medicalHistory"
+        [lifeStyle]="lifeStyle"></app-accordion>
+    <div class="col-4">
+        <p-messages [(value)]="messages" [enableService]="false" [closable]="false" />
+    </div>
+</div>

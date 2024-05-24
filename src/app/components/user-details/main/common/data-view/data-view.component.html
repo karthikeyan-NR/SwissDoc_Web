@@ -1,12 +1,13 @@
-<div class="card">
-    <p-tabView>
-        <ng-container *ngFor="let data of fullData;let i=index">
-            <p-tabPanel *ngIf="data.heading !== 'Personal Details'" [header]="data.heading">
-                <ng-template pTemplate="content">
-                    <app-table [loading]="false" [key]="data.heading.toLowerCase()" [footerKey]="'someFooterKey'"
-                        [tableData]="data.data" [columns]="generateColumns(i)"></app-table>
-                </ng-template>
-            </p-tabPanel>
-        </ng-container>
-    </p-tabView>
-</div>
+<p-tabView>
+    <ng-container *ngFor="let data of fullData;let i=index">
+        <p-tabPanel [header]="data.heading">
+            <ng-template *ngIf="data.heading !== 'Personal Details'" pTemplate="content">
+                <app-table [loading]="false" [key]="data.heading.toLowerCase()" [footerKey]="'someFooterKey'"
+                    [tableData]="data.data" [columns]="generateColumns(i)"></app-table>
+            </ng-template>
+            <ng-template *ngIf="data.heading === 'Personal Details'" pTemplate="content">
+                <app-profile-panel [profile]="data.data"></app-profile-panel>
+            </ng-template>
+        </p-tabPanel>
+    </ng-container>
+</p-tabView>

@@ -1,7 +1,4 @@
-<div class="card">
-    <div>
-        <p-selectButton [options]="stateOptions" [(ngModel)]="value" optionLabel="label" optionValue="value" />
-    </div>
-    <app-menu-group *ngIf="value==='on'" [menuConfigs]="menuConfigs"></app-menu-group>
-    <app-data-view *ngIf="value==='off'" [fullData]="userDetails"></app-data-view>
-</div>
+<app-menu-group (loading)="isLoading($event)" [menuConfigs]="menuConfigs"></app-menu-group>
+<ng-container *ngIf="!loading">
+    <app-data-view [fullData]="userDetails"></app-data-view>
+</ng-container>
