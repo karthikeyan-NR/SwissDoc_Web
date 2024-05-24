@@ -13,11 +13,11 @@ import { MessageService } from 'primeng/api';
 import { TranslateModule } from '@ngx-translate/core';
 // Register the German locale data
 registerLocaleData(localeDe);
-import { AuthInterceptor, AuthModule, LogLevel } from 'angular-auth-oidc-client';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 import { keycloakConfig } from './keycloak-config';
+import { AuthInterceptor } from './auth.interceptor';
 
 function initializeKeycloak(keycloak: KeycloakService) {
     return () =>
@@ -49,6 +49,7 @@ function initializeKeycloak(keycloak: KeycloakService) {
         AppApiModule.forRoot(),
     ],
     providers: [
+        { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
         { provide: LocationStrategy, useClass: PathLocationStrategy },
         MessageService,
         { provide: LocationStrategy, useClass: PathLocationStrategy },

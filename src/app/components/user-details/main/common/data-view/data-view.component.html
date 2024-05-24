@@ -1,0 +1,12 @@
+<div class="card">
+    <p-tabView>
+        <ng-container *ngFor="let data of fullData;let i=index">
+            <p-tabPanel *ngIf="data.heading !== 'Personal Details'" [header]="data.heading">
+                <ng-template pTemplate="content">
+                    <app-table [loading]="false" [key]="data.heading.toLowerCase()" [footerKey]="'someFooterKey'"
+                        [tableData]="data.data" [columns]="generateColumns(i)"></app-table>
+                </ng-template>
+            </p-tabPanel>
+        </ng-container>
+    </p-tabView>
+</div>

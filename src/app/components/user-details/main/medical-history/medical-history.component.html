@@ -1,11 +1,7 @@
-<p>Check the conditions that apply to you or any member of your immediate relatives?</p>
+<p>{{subHeading}}</p>
 <div>
     <ng-container *ngFor="let condition of medicalConditions; let i = index">
-        <button pButton type="button" class="p-button-sm mr-3 mb-2"
-            [ngClass]="{'p-button-info': condition.value,'p-button-outlined':!condition.value}"
-            [pTooltip]="condition.info" (click)="toggleCondition(i)">
-            {{ condition.label }}
-        </button>
+        <app-custom-toggle-button [config]="condition" (openConditionDialog)="openConditionDialog($event,i)"></app-custom-toggle-button>
     </ng-container>
 </div>
 <button class="p-button" (click)="submitForm()">Submit</button>

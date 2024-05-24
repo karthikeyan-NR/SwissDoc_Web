@@ -1,10 +1,10 @@
-<p>Do you take medications for any of the following medical conditions?</p>
+<p>{{subHeading}}</p>
 <div>
     <ng-container *ngFor="let condition of medications; let i = index">
-        <button pButton type="button" class="p-button-sm mr-3 mb-2"
+        <button pButton type="button" class="p-button-sm mr-1 mb-2 w-10rem"
             [ngClass]="{'p-button-info': condition.value,'p-button-outlined':!condition.value}"
             [pTooltip]="condition.info" (click)="toggleCondition(i)">
-            {{ condition.label }}
+            {{ condition.name }}
         </button>
     </ng-container>
 </div>

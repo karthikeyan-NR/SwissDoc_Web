@@ -1,0 +1,5 @@
+<button pButton type="button" class="p-button-sm mr-1 mb-2 w-10rem"
+    [ngClass]="{'p-button-info': config.value,'p-button-outlined':!config.value}" [pTooltip]="config.info"
+    (click)="toggleCondition()">
+    {{ config.name }}
+</button>

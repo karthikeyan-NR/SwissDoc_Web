@@ -1,0 +1,4 @@
+<div *ngIf="showChart" class="grid">
+    <app-poincare class="col-6" *ngIf="showChart" [chartType]="'poincare'"></app-poincare>
+    <app-tachogram class="col-6" *ngIf="showChart" [chartType]="'tachogram'"></app-tachogram>
+</div>

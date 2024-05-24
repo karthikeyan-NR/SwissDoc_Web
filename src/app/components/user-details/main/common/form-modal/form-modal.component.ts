@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { dropDownOptions } from '../../helper/user-details.config';
 
 @Component({
   selector: 'app-form-modal',
@@ -7,13 +8,7 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
   styleUrls: ['./form-modal.component.css']
 })
 export class FormModalComponent implements OnInit {
-  dropDownOptions = [
-    { label: 'Self', value: 'self' },
-    { label: 'Father', value: 'father' },
-    { label: 'Mother', value: 'mother' },
-    { label: 'Siblings', value: 'siblings' },
-    { label: 'Grandparents', value: 'grandparents' }
-  ];
+  dropdownOptions = dropDownOptions;
   data: any;
   parent!: string;
 

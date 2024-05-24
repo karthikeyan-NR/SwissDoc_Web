@@ -29,7 +29,7 @@ export class TableComponent implements OnInit, OnDestroy {
     this._selectedColumns = this.columns.filter((col: any) => val.includes(col));
   }
 
-  ngOnInit() {
+  ngOnInit() {    
     this._selectedColumns = this.columns;
     this.showCheckBox = showCheckBox[this.key];
     this.showColumnSelection = showColumnSelection[this.key];

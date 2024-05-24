@@ -1,6 +1,12 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { UserDataService } from '../../user-data.service';
+import { LifeStyle } from '../model/user-details.model';
+
+interface DropdownOption {
+  label: string;
+  value: string;
+}
 
 @Component({
   selector: 'app-life-style',
@@ -8,12 +14,13 @@ import { DynamicDialogRef } from 'primeng/dynamicdialog';
   styleUrls: ['./life-style.component.css']
 })
 export class LifeStyleComponent {
-  lifestyleFormGroup!: FormGroup;
 
-  questionInfo = {
-    smoke: "Smoking behavior encompasses the use of tobacco products, including cigarettes, cigars, or pipes, which can lead to addiction and pose serious health risks.",
-    exercise: "Regular exercise for at least 30 minutes a day promotes cardiovascular health, boosts mood, and contributes to overall well-being.",
-    eatHealthy: "Eating healthy involves consuming a balanced diet rich in fruits, vegetables, lean proteins, whole grains, and healthy fats, while limiting processed foods, sugar, and excessive salt intake."
+  lifeStyleData!: LifeStyle[];
+
+  questionInfo: { [key: string]: string } = {
+    'smoke': "Smoking behavior encompasses the use of tobacco products, including cigarettes, cigars, or pipes, which can lead to addiction and pose serious health risks.",
+    'exercise': "Regular exercise for at least 30 minutes a day promotes cardiovascular health, boosts mood, and contributes to overall well-being.",
+    'eatHealthy': "Eating healthy involves consuming a balanced diet rich in fruits, vegetables, lean proteins, whole grains, and healthy fats, while limiting processed foods, sugar, and excessive salt intake."
   }
 
   selectButtonOptions = [
@@ -21,31 +28,44 @@ export class LifeStyleComponent {
     { label: 'No', value: false }
   ];
 
-  smokeOptions = ['Daily', 'Occasionally', 'Quit'];
-  exerciseOptions = ['Daily', 'Weekly', 'Rarely'];
-  eatHealthyOptions = ['Always', 'Sometimes', 'Rarely'];
+  dropdownOptions: { [key: string]: DropdownOption[] } = {
+    smoke: [
+      { label: 'Daily', value: 'Daily' },
+      { label: 'Occasionally', value: 'Occasionally' },
+      { label: 'Quit', value: 'Quit' }
+    ],
+    exercise: [
+      { label: 'Daily', value: 'Daily' },
+      { label: 'Weekly', value: 'Weekly' },
+      { label: 'Rarely', value: 'Rarely' }
+    ],
+    eatHealthy: [
+      { label: 'Always', value: 'Always' },
+      { label: 'Sometimes', value: 'Sometimes' },
+      { label: 'Rarely', value: 'Rarely' }
+    ]
+  };
 
-  constructor(private fb: FormBuilder, private ref: DynamicDialogRef) { }
+  constructor(private ref: DynamicDialogRef, private userDataService: UserDataService) { }
 
-  ngOnInit() {
-    this.lifestyleFormGroup = this.fb.group({
-      smoke: this.fb.group({
-        smoke: [],
-        smokeFrequency: ['']
-      }),
-      exercise: this.fb.group({
-        exercise: [],
-        exerciseFrequency: ['']
-      }),
-      eatHealthy: this.fb.group({
-        eatHealthy: [],
-        eatHealthyFrequency: ['']
-      })
-    });
+  ngOnInit(): void {
+    this.initializeLifeStyleData();
+  }
+
+  private initializeLifeStyleData(): void {
+    this.lifeStyleData = this.userDataService.getLifeStyle();
+  }
+
+  questionValueChange(selectedOption: boolean, index: number) {
+    this.lifeStyleData[index].value = selectedOption;
+  }
+
+  dropdownValueChange(selectedOption: any, index: number) {
+    this.lifeStyleData[index].frequency = selectedOption;
   }
 
   onSave() {
-    console.log(this.lifestyleFormGroup.value);
+    this.userDataService.updateLifeStyle(this.lifeStyleData);
     this.ref.close();
   }
 }

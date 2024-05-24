@@ -6,7 +6,6 @@ import { TableComponent } from './table.component';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { AppTranslateChildModule } from 'src/app/coreModules/app.translate.child.module';
 import { ButtonModule } from 'primeng/button';
-import { TaskAlloactionModule } from './taskallocation/taskallocation.module';
 import { DialogModule } from 'primeng/dialog';
 
 
@@ -18,7 +17,6 @@ import { DialogModule } from 'primeng/dialog';
 		MultiSelectModule,
 		TableModule,
 		ButtonModule,
-		TaskAlloactionModule,
 		DialogModule,
 		AppTranslateChildModule
 	],
